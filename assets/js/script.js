@@ -37,7 +37,7 @@
 // Menu item is called from object array and appended as a child to dishlist.html 
 
 // local storage: get dish or initialize empty object
-var storedDishes = JSON.parse(localStorage.getItem("Dish")) || {};
+var storedDishes = JSON.parse(localStorage.getItem("Dish")) || [];
 
 
 // on load, ask for user's location data
@@ -105,6 +105,7 @@ function zomatoMenuUrl() {
         console.log(response);
 
         console.log(response.restaurants[0].restaurant.menu_url);
+
         // menu link div
         var menuUrlDiv = $("<div>").addClass("container");
         // link to zomato menu url
@@ -139,52 +140,28 @@ function showDishes() {
         var dishesListEl = $("<div>").addClass("container");
 
         for (let i = 0; i < dishesList.length; i++) {
-            var restaurantNameVal = dishesList[i].restaurant_name;
-            var dishButtons = $("<button>").text(dishesList[i].menu_item_name).addClass("row dish-button").attr("value", restaurantNameVal);
+            var dishName = dishesList[i].menu_item_name;
+            var dishButtons = $("<button>").text(dishName).addClass("row dish-button").attr("value", dishName);
             
             $("body").prepend(dishesListEl);
             dishesListEl.append(dishButtons);
         };
-      
+        applyDishButtonEventLisetner()
     });
+    
     
 };
 
+function applyDishButtonEventLisetner() {
 
+    $(".dish-button").on("click", function () {
+        
+        
+        var dish = $(this).val();
+        // var storedDishes = ("dishName", dish);
+        storedDishes.push(dish);
+        console.log(storedDishes);
 
-
-
-
-
-// $(".dish-button").on("click", function () {
-
-//     // select the textarea closest to the save button clicked
-//     // add appropriate values to our localstorage object
-//     // get the text of the box next to the save button clicked
-//     
-//     var dish = $(this).val();
-//     var action = todo.find("textarea").val();
-
-//     storedTodos[hour] = action;
-
-//     localStorage.setItem("Dish", JSON.stringify(storedDishes));
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        localStorage.setItem("Dish", JSON.stringify(storedDishes));
+    });
+};
