@@ -99,17 +99,23 @@ function showDishes() {
             "x-rapidapi-key": "a8277d1a91msh1d392f5f23bf2a4p184d79jsn13972e7d049f"
         }
     }).then(function (response) {
-        // console.log(response)
-        var dishesList = response.result.data;
-        
-        for (let i = 0; i < dishesList.length; i++) {
+        console.log(response);
 
+        var dishesList = response.result.data;
+        // clears page to make way for menu items
+        $(".rest-button").remove();
+        // TODO: Modal Reaserch!
+        var dishesListEl = $("<div>").addClass("container modal-content")
+        for (let i = 0; i < dishesList.length; i++) {
+            var dishButtons = $("<button>").text(dishesList[i].menu_item_name).addClass("row dish-button").attr("data-toggle", "modal");
             
+            $("body").prepend(dishesListEl);
+            dishesListEl.append(dishButtons);
         };
       
     });
     
-}
+};
 
 
 
