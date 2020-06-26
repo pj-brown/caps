@@ -89,7 +89,7 @@ function showPosition(position) {
 
 function zomatoMenuUrl() {
 
-    var q = $('.rest-button').data("zomato")
+    var q = $(this).data("zomato")
     console.log("Q value: ", q)
     var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + q;
 
