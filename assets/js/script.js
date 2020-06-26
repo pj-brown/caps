@@ -67,7 +67,7 @@ function showPosition(position) {
         method: "GET",
         "headers": {
             "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
-            "x-rapidapi-key": "a8277d1a91msh1d392f5f23bf2a4p184d79jsn13972e7d049f"
+            "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
         }
     }).then(function (response) {
         // console.log(response)
@@ -129,7 +129,7 @@ function showDishes() {
         method: "GET",
         "headers": {
             "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
-            "x-rapidapi-key": "a8277d1a91msh1d392f5f23bf2a4p184d79jsn13972e7d049f"
+            "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
         }
     }).then(function (response) {
         console.log(response);
