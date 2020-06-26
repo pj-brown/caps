@@ -23,8 +23,7 @@
 // using variable that stores user position, pass variable into url
 // inside the API callback function, use a for loop to render restaurants to page
 // 2a. user selects one of the nearby restaurants
-// resturant ID is stored 
-// resturant ID is passed into Menu Items For Restaurant
+// resturant ID is stored     tems For Restaurant
 
 
 
@@ -36,6 +35,10 @@
 
 // 4. If user selects to add menu items the menu items are rendered onto the dishlist.html
 // Menu item is called from object array and appended as a child to dishlist.html 
+
+// local storage: get dish or initialize empty object
+var storedDishes = JSON.parse(localStorage.getItem("Dish")) || [];
+
 
 // on load, ask for user's location data
 window.addEventListener("load", getLocation)
@@ -70,26 +73,56 @@ function showPosition(position) {
         // console.log(response)
         var restaurantList = response.result.data
 
-        var restaurantListEl = $("<div>").addClass("container")
+        var restaurantListEl = $("<div>").addClass("container");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr("value", restaurantId);
+            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr("value", restaurantId).attr("data-zomato", restaurantList[i].restaurant_name);
             $('body').prepend(restaurantListEl);
             restaurantListEl.append(restaurantButtons);
 
         };
 
-        $('.rest-button').on('click', showDishes)
+        $('.rest-button').on('click', showDishes);
 
     });
 };
 
+function zomatoMenuUrl() {
+
+    var q = $('.rest-button').data("zomato")
+    console.log("Q value: ", q)
+    var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + q;
+
+
+    $.ajax({
+        url: zomatoUrl,
+        method: "GET",
+        "headers": {
+            "user-key": "fd3179f7aa74b386fbac5aec3f13b934"
+        }
+        
+    }).then(function (response) {
+        console.log(response);
+
+        console.log(response.restaurants[0].restaurant.menu_url);
+
+        // menu link div
+        var menuUrlDiv = $("<div>").addClass("container");
+        // link to zomato menu url
+        var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(q + " " + "Menu");
+        // appending menu url div to body
+        $("body").append(menuUrlDiv);
+        // prepends link to top of dishes page
+        menuUrlDiv.prepend(menuUrlLink);
+    });
+};
 
 function showDishes() {
     var urlId = $(this).val();
     // console.log(urlId)
     var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/"+urlId+"/menuitems?page=1"
     // console.log(dishesUrl)
+    zomatoMenuUrl();
 
     $.ajax({
         url: dishesUrl,
@@ -99,34 +132,36 @@ function showDishes() {
             "x-rapidapi-key": "a8277d1a91msh1d392f5f23bf2a4p184d79jsn13972e7d049f"
         }
     }).then(function (response) {
-        // console.log(response)
-        var dishesList = response.result.data;
-        
-        for (let i = 0; i < dishesList.length; i++) {
+        console.log(response);
 
+        var dishesList = response.result.data;
+        // clears page to make way for menu items
+        $(".rest-button").remove();
+        var dishesListEl = $("<div>").addClass("container");
+
+        for (let i = 0; i < dishesList.length; i++) {
+            var dishName = dishesList[i].menu_item_name;
+            var dishButtons = $("<button>").text(dishName).addClass("row dish-button").attr("value", dishName);
             
+            $("body").prepend(dishesListEl);
+            dishesListEl.append(dishButtons);
         };
-      
+        applyDishButtonEventLisetner()
     });
     
-}
+    
+};
 
+function applyDishButtonEventLisetner() {
 
+    $(".dish-button").on("click", function () {
+        
+        
+        var dish = $(this).val();
+        // var storedDishes = ("dishName", dish);
+        storedDishes.push(dish);
+        console.log(storedDishes);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        localStorage.setItem("Dish", JSON.stringify(storedDishes));
+    });
+};
