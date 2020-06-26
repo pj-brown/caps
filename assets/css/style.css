@@ -1,0 +1,18 @@
+/* change the color of the link */
+.btn:hover {
+    background-color: #e66815;
+    color: white;
+}
+/* .nav-link{
+    color: antiquewhite;
+} */
+.image{
+    background-image: url("images.png");
+width: 100vw;
+height: 100vh; 
+background-size: 100% 100%;
+background-repeat: no-repeat;
+position: relative;
+/* image-rendering: -webkit-optimize-contrast; */
+
+}
