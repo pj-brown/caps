@@ -111,7 +111,7 @@ function showDishes() {
         }).then(function (response) {
             console.log(response);
     
-            console.log(response.restaurants[i].restaurant.menu_url);
+            console.log(response.restaurants[0].restaurant.menu_url);
     
             // menu link div
             var menuUrlDiv = $("<div>").addClass("container");
