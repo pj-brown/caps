@@ -1,14 +1,14 @@
 /* collapse 1 */
 #headingOne{
-    background-color: #ffef15;
+    background-color: #1E5926ff;
     opacity: 1;
     color: white;
 }
 /* collapse 2 */
 #headingTwo{
-    background-color: #ffef15;
+    background-color:#D9CAAEff;
 
-    opacity: 0.9;
+    
 }
 /* change background when hover on link */
 .btn:hover {
@@ -20,6 +20,18 @@
 
 /* image of the background */
 body{
-    background-image:url(https://images.unsplash.com/photo-1581546104493-f7e013a136ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1430&q=80);
+    background-color: #213035ff;
 }
+/* change background color of navbar */
+
+.card-body{
+    background-color:  #B99861ff;
+    border: none;
+
+}
+.card{
+    border: none;
+}
+
+
     
