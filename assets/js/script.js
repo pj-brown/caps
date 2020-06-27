@@ -76,8 +76,8 @@ function showPosition(position) {
         var restaurantListEl = $("<div>").addClass("container");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr("value", restaurantId).attr("data-zomato", restaurantList[i].restaurant_name);
-            $('body').prepend(restaurantListEl);
+            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr({"value": restaurantId, "zomato": restaurantList[i].restaurant_name});
+            $('body').append(restaurantListEl);
             restaurantListEl.append(restaurantButtons);
 
         };
@@ -87,37 +87,42 @@ function showPosition(position) {
     });
 };
 
-function zomatoMenuUrl() {
 
-    var q = $(this).data("zomato")
-    console.log("Q value: ", q)
-    var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + q;
-
-
-    $.ajax({
-        url: zomatoUrl,
-        method: "GET",
-        "headers": {
-            "user-key": "fd3179f7aa74b386fbac5aec3f13b934"
-        }
-        
-    }).then(function (response) {
-        console.log(response);
-
-        console.log(response.restaurants[0].restaurant.menu_url);
-
-        // menu link div
-        var menuUrlDiv = $("<div>").addClass("container");
-        // link to zomato menu url
-        var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(q + " " + "Menu");
-        // appending menu url div to body
-        $("body").append(menuUrlDiv);
-        // prepends link to top of dishes page
-        menuUrlDiv.prepend(menuUrlLink);
-    });
-};
 
 function showDishes() {
+
+
+    var q = $(this).attr("zomato");
+
+    function zomatoMenuUrl() {
+
+        
+        console.log("Q value: ", q)
+        var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + q;
+    
+    
+        $.ajax({
+            url: zomatoUrl,
+            method: "GET",
+            "headers": {
+                "user-key": "fd3179f7aa74b386fbac5aec3f13b934"
+            }
+            
+        }).then(function (response) {
+            console.log(response);
+    
+            console.log(response.restaurants[i].restaurant.menu_url);
+    
+            // menu link div
+            var menuUrlDiv = $("<div>").addClass("container");
+            // link to zomato menu url
+            var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(q + " " + "Menu");
+            // appending menu url div to body
+            $("body").append(menuUrlDiv);
+            // prepends link to top of dishes page
+            menuUrlDiv.append(menuUrlLink);
+        });
+    };
     var urlId = $(this).val();
     // console.log(urlId)
     var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/"+urlId+"/menuitems?page=1"
@@ -143,7 +148,7 @@ function showDishes() {
             var dishName = dishesList[i].menu_item_name;
             var dishButtons = $("<button>").text(dishName).addClass("row dish-button").attr("value", dishName);
             
-            $("body").prepend(dishesListEl);
+            $("body").append(dishesListEl);
             dishesListEl.append(dishButtons);
         };
         applyDishButtonEventLisetner()
@@ -165,3 +170,4 @@ function applyDishButtonEventLisetner() {
         localStorage.setItem("Dish", JSON.stringify(storedDishes));
     });
 };
+
