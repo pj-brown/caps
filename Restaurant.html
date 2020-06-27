@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurants</title>
+    <title>Dish List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <a href="index.html">Home</a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger txt-bold ">
+        <a class="navbar-brand" href="#">CAPS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+            <li class="nav-item active">
+              <a class="nav-link btn  "href="index.html">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  btn "    href="#">Restaurant</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link btn " href="dishlist.html" >Dishlist Items</a>
+            </li>
+            
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Zip Code">
+            <button class="btn btn-outline-white txt-white my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
 </body>
 </html>
