@@ -12,7 +12,7 @@ function renderDishlist() {
     });
 
     for (let i = 0; i < sorted.length; i++) {
-        var dishListItem = $("<p>").text(sorted[i].rest + ": " + sorted[i].dish)
+        var dishListItem = $("<li>").text(sorted[i].rest + ": " + sorted[i].dish).addClass("dish-style")
         $("#dishlist").append(dishListItem)
     };
 };

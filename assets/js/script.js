@@ -60,7 +60,7 @@ function getLocation() {
 function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=1"
+    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=5"
 
     $.ajax({
         "url": latlongUrl,
@@ -76,7 +76,8 @@ function showPosition(position) {
         var restaurantListEl = $('<div>').addClass("container-fluid");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name});
+
+            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary hvr-bounce-in").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name});
 
             // modal variables
             var restaurantAddress = response.result.data[i].address.formatted
@@ -141,7 +142,7 @@ function zomatoMenuUrl(qname) {
         // link to zomato menu url
         var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(qname + " " + "Menu");
         // appending menu url div to body
-        $("body").append(menuUrlDiv);
+        $("#menu-section").append(menuUrlDiv);
         // prepends link to top of dishes page
         menuUrlDiv.append(menuUrlLink);
     });
@@ -168,19 +169,19 @@ function showDishes() {
 
         var dishesList = response.result.data;
         // clears page to make way for menu items
-        $(".rest-button").remove();
+        // $(".rest-button").remove();
         var dishesListEl = $("<div>").addClass("container");
-
+        dishesListEl.empty();
         for (let i = 0; i < dishesList.length; i++) {
             var dishName = dishesList[i].menu_item_name;
             var restName = dishesList[i].restaurant_name;
             var dishButtons = $("<button>")
                 .text(dishName)
-                .addClass("row dish-button")
+                .addClass("row dish-button hvr-bounce-in")
                 .attr({ "value": dishName, "data-name": restName })
                 .click(applyDishButtonEventLisetner);
 
-            $("body").append(dishesListEl);
+            $("#menu-section").append(dishesListEl);
             dishesListEl.append(dishButtons);
         };
     });
@@ -199,4 +200,5 @@ function applyDishButtonEventLisetner() {
     console.log(storedDishes);
     storedDishes.push(obj);
     localStorage.setItem("Dish", JSON.stringify(storedDishes));
+
 };
