@@ -11,6 +11,12 @@
 
     
 }
+/* collapse 3 */
+#headingThree{
+    background-color:#B99861ff;
+
+    
+}
 /* change background when hover on link */
 .btn:hover {
     color: rgb(22, 21, 21);

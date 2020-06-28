@@ -60,7 +60,7 @@ function getLocation() {
 function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=5"
+    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=1"
 
     $.ajax({
         "url": latlongUrl,
@@ -76,8 +76,8 @@ function showPosition(position) {
         var restaurantListEl = $('<div>').addClass("container-fluid");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-
-            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary hvr-bounce-in").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name});
+            
+            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i});
 
             // modal variables
             var restaurantAddress = response.result.data[i].address.formatted
@@ -104,8 +104,9 @@ function showPosition(position) {
             // console.log(modalRestaurantInfo)
             // modal footer variables
             var modalFooter = $('<div class="modal modal-footer">')       
-            var modalMenuButton = $('<button type="button" class="menu-button btn btn-primary">').text("Show me the menu!")
-            
+            var modalMenuButton = $('<button type="button" class="menu-button btn btn-primary modal-close" data-dismiss="modal">').text("Show me the menu!").attr({"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name})
+
+
             $('#restaurant-card-body').append(restaurantListEl);
             restaurantListEl.append(restaurantButtons, modalDiv);
             modalDiv.append(modalDialog);
@@ -115,8 +116,53 @@ function showPosition(position) {
             modalFooter.append(modalMenuButton);
             modalContent.append(modalHeader, modalBody, modalFooter);
         };
-        $('.menu-button').on('click', showDishes);
+        $('.menu-button').on('click', showDishes)
     });
+};
+
+function showDishes() {
+    // toggles Restaurant accordion to close and then Men accordion opens
+    $("#collapseOne").toggle();
+    $("#collapseThree").toggle();
+    var q = $(".menu-button").attr("data-zomato");
+
+    var urlId = $(this).val();
+    console.log(urlId)
+    var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/" + urlId + "/menuitems?page=1"
+    // console.log(dishesUrl)
+    zomatoMenuUrl(q);
+
+    $.ajax({
+        url: dishesUrl,
+        method: "GET",
+        "headers": {
+            "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
+            "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
+        }
+    }).then(function (response) {
+        console.log(response);
+
+        var dishesList = response.result.data;
+        // clears page to make way for menu items
+        // $(".rest-button").remove();
+        var dishesListEl = $("<div>").addClass("container");
+
+        for (let i = 0; i < dishesList.length; i++) {
+            var dishName = dishesList[i].menu_item_name;
+            var restName = dishesList[i].restaurant_name;
+            var dishButtons = $("<button>")
+                .text(dishName)
+                .addClass("row dish-button btn btn-primary btn-block")
+                .attr({ "value": dishName, "data-name": restName })
+                .click(applyDishButtonEventLisetner);
+
+            $("#menu-card-body").append(dishesListEl);
+            dishesListEl.append(dishButtons);
+            
+        };
+    });
+
+
 };
 
 function zomatoMenuUrl(qname) {
@@ -138,57 +184,15 @@ function zomatoMenuUrl(qname) {
         console.log(response.restaurants[0].restaurant.menu_url);
 
         // menu link div
-        var menuUrlDiv = $("<div>").addClass("container");
+        var menuUrlDiv = $("<div>").addClass("container-fluid");
         // link to zomato menu url
         var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(qname + " " + "Menu");
-        // appending menu url div to body
-        $("#menu-section").append(menuUrlDiv);
+        // // appending menu url div to body
+        $("#menu-card-body").append(menuUrlDiv);
         // prepends link to top of dishes page
         menuUrlDiv.append(menuUrlLink);
     });
 };
-
-function showDishes() {
-    var q = $(this).attr("data-zomato");
-
-    var urlId = $(this).val();
-    // console.log(urlId)
-    var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/" + urlId + "/menuitems?page=1"
-    // console.log(dishesUrl)
-    zomatoMenuUrl(q);
-
-    $.ajax({
-        url: dishesUrl,
-        method: "GET",
-        "headers": {
-            "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
-            "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
-        }
-    }).then(function (response) {
-        console.log(response);
-
-        var dishesList = response.result.data;
-        // clears page to make way for menu items
-        // $(".rest-button").remove();
-        var dishesListEl = $("<div>").addClass("container");
-        dishesListEl.empty();
-        for (let i = 0; i < dishesList.length; i++) {
-            var dishName = dishesList[i].menu_item_name;
-            var restName = dishesList[i].restaurant_name;
-            var dishButtons = $("<button>")
-                .text(dishName)
-                .addClass("row dish-button hvr-bounce-in")
-                .attr({ "value": dishName, "data-name": restName })
-                .click(applyDishButtonEventLisetner);
-
-            $("#menu-section").append(dishesListEl);
-            dishesListEl.append(dishButtons);
-        };
-    });
-
-
-};
-
 
 function applyDishButtonEventLisetner() {
 
@@ -200,5 +204,4 @@ function applyDishButtonEventLisetner() {
     console.log(storedDishes);
     storedDishes.push(obj);
     localStorage.setItem("Dish", JSON.stringify(storedDishes));
-
 };
