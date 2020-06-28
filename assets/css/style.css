@@ -33,5 +33,7 @@ body{
     border: none;
 }
 
-
+.modal-footer{
+    position: relative;
+}
     

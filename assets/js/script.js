@@ -70,20 +70,51 @@ function showPosition(position) {
             "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
         }
     }).then(function (response) {
-        // console.log(response)
+        console.log(response)
         var restaurantList = response.result.data
 
-        var restaurantListEl = $("<div>").addClass("container");
+        var restaurantListEl = $('<div>').addClass("container-fluid");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr({ "value": restaurantId, "data-zomato": restaurantList[i].restaurant_name });
-            $("body").append(restaurantListEl);
-            restaurantListEl.append(restaurantButtons);
+            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name});
 
+            // modal variables
+            var restaurantAddress = response.result.data[i].address.formatted
+            var restaurantPhone = response.result.data[i].restaurant_phone
+            var restaurantPriceRange = response.result.data[i].price_range
+            // the restaurants i'm getting all seem to have no available price range so we can take this if statement out if it's displaying the same results for restaurants in Minneapolis
+            if (restaurantPriceRange === "") {
+                restaurantPriceRange="Unavailable"
+            }
+            var restaurantName = response.result.data[i].restaurant_name
+            var modalDiv = $('<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="restaurantModalLabel" aria-hidden="true">').attr("id", "restaurantModal" + i)
+            var modalDialog = $('<div class="modal-dialog" role="document">')
+            var modalContent = $('<div class="modal-content">')
+            // modal header variables
+            var modalHeader = $('<div class="modal-header">')
+            var modalTitle = $('<h4 class="modal-title">').text(restaurantName)
+
+            var modalCloseButton = $('<button class="modal-close btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">').add($('<span aria-hidden="true>')).text("Close")
+            // modal body variablesco
+            var modalBody = $('<div class="modal-body">')
+            var modalRestaurantAddress = $('<p class="modal-restaurant-address">').text(restaurantAddress)
+            var modalRestaurantPhone = $('<p class="modal-restaurant-phone">').text(restaurantPhone)
+            var modalRestaurantPriceRange = $('<p class="modal-restaurant-price-range">').text("Price range: " + restaurantPriceRange)
+            // console.log(modalRestaurantInfo)
+            // modal footer variables
+            var modalFooter = $('<div class="modal modal-footer">')       
+            var modalMenuButton = $('<button type="button" class="menu-button btn btn-primary">').text("Show me the menu!")
+            
+            $('#restaurant-card-body').append(restaurantListEl);
+            restaurantListEl.append(restaurantButtons, modalDiv);
+            modalDiv.append(modalDialog);
+            modalDialog.append(modalContent);
+            modalBody.append(modalRestaurantAddress, modalRestaurantPhone, modalRestaurantPriceRange);
+            modalHeader.append(modalTitle, modalCloseButton);
+            modalFooter.append(modalMenuButton);
+            modalContent.append(modalHeader, modalBody, modalFooter);
         };
-
-        $('.rest-button').on('click', showDishes);
-
+        $('.menu-button').on('click', showDishes);
     });
 };
 
