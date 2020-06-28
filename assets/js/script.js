@@ -77,7 +77,7 @@ function showPosition(position) {
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
             var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr({"value": restaurantId, "zomato": restaurantList[i].restaurant_name});
-            $('body').append(restaurantListEl);
+            $("body").append(restaurantListEl);
             restaurantListEl.append(restaurantButtons);
 
         };
