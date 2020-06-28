@@ -106,7 +106,12 @@ tons */
     border-radius: 5px;
     text-shadow: 0.6px 0.3px rgb(24, 46, 31);
 }
+.modal-footer{
+    position: relative;
+}
+
 /*    
+
 $hunter-green: #1E5926ff;
 $gunmetal: #213035ff;
 $dutch-white: #D9CAAEff;
