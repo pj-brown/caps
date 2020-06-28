@@ -73,11 +73,14 @@ function showPosition(position) {
         console.log(response)
         var restaurantList = response.result.data
 
-        var restaurantListEl = $('<div>').addClass("container-fluid");
+        var restaurantListEl = $('<div>').addClass("container rest-list-div");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
             
-            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i});
+            var restaurantButtons = $("<button type='button' data-toggle='modal'>")
+                .text(restaurantList[i].restaurant_name)
+                .addClass("rest-button btn col btn-primary")
+                .attr({"data-target": "#restaurantModal" + i});
 
             // modal variables
             var restaurantAddress = response.result.data[i].address.formatted
@@ -88,26 +91,35 @@ function showPosition(position) {
                 restaurantPriceRange="Unavailable"
             }
             var restaurantName = response.result.data[i].restaurant_name
-            var modalDiv = $('<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="restaurantModalLabel" aria-hidden="true">').attr("id", "restaurantModal" + i)
+            var modalDiv = $('<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="restaurantModalLabel" aria-hidden="true">')
+                .attr("id", "restaurantModal" + i)
             var modalDialog = $('<div class="modal-dialog" role="document">')
             var modalContent = $('<div class="modal-content">')
             // modal header variables
             var modalHeader = $('<div class="modal-header">')
-            var modalTitle = $('<h4 class="modal-title">').text(restaurantName)
+            var modalTitle = $('<h4 class="modal-title">')
+                .text(restaurantName)
 
-            var modalCloseButton = $('<button class="modal-close btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">').add($('<span aria-hidden="true>')).text("Close")
+            var modalCloseButton = $('<button class="modal-close btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">')
+                .add($('<span aria-hidden="true>'))
+                .text("Close")
             // modal body variablesco
             var modalBody = $('<div class="modal-body">')
-            var modalRestaurantAddress = $('<p class="modal-restaurant-address">').text(restaurantAddress)
-            var modalRestaurantPhone = $('<p class="modal-restaurant-phone">').text(restaurantPhone)
-            var modalRestaurantPriceRange = $('<p class="modal-restaurant-price-range">').text("Price range: " + restaurantPriceRange)
+            var modalRestaurantAddress = $('<p class="modal-restaurant-address">')
+                .text(restaurantAddress)
+            var modalRestaurantPhone = $('<p class="modal-restaurant-phone">')
+                .text(restaurantPhone)
+            var modalRestaurantPriceRange = $('<p class="modal-restaurant-price-range">')
+                .text("Price range: " + restaurantPriceRange)
             // console.log(modalRestaurantInfo)
             // modal footer variables
             var modalFooter = $('<div class="modal modal-footer">')       
-            var modalMenuButton = $('<button type="button" class="menu-button btn btn-primary modal-close" data-dismiss="modal">').text("Show me the menu!").attr({"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name})
+            var modalMenuButton = $('<button type="button" class="menu-button btn btn-primary modal-close" data-dismiss="modal">')
+                .text("Show me the menu!")
+                .attr({"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name})
 
 
-            $('#restaurant-card-body').append(restaurantListEl);
+            $('#restaurant-list').append(restaurantListEl);
             restaurantListEl.append(restaurantButtons, modalDiv);
             modalDiv.append(modalDialog);
             modalDialog.append(modalContent);
@@ -156,7 +168,7 @@ function showDishes() {
                 .attr({ "value": dishName, "data-name": restName })
                 .click(applyDishButtonEventLisetner);
 
-            $("#menu-card-body").append(dishesListEl);
+            $("#menu-section").append(dishesListEl);
             dishesListEl.append(dishButtons);
             
         };
@@ -184,9 +196,11 @@ function zomatoMenuUrl(qname) {
         console.log(response.restaurants[0].restaurant.menu_url);
 
         // menu link div
-        var menuUrlDiv = $("<div>").addClass("container-fluid");
+        var menuUrlDiv = $("<div>").addClass("container");
         // link to zomato menu url
-        var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(qname + " " + "Menu");
+        var menuUrlLink = $("<a>")
+            .attr("href", response.restaurants[0].restaurant.menu_url)
+            .text(qname + " " + "Menu");
         // // appending menu url div to body
         $("#menu-card-body").append(menuUrlDiv);
         // prepends link to top of dishes page

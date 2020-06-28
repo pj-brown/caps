@@ -36,6 +36,12 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+/* center brand text */
+.center-text {
+    justify-content: center;
+    margin: 0;
+}
 /* change background color of navbar */
 
 .card-body{
@@ -57,6 +63,13 @@ body {
     opacity: 0.8;
     font-size: 1.2em;
 }
+
+/* center rest and dish buttons */
+
+/* .rest-list-div {
+    text-align: center;
+    align-items: center;
+} */
 
 /* restaurant but
 tons */
@@ -93,6 +106,12 @@ tons */
   }
 
 .rest-button:hover {
+    background-color: #809B98ff;
+    color: #213035ff;
+    text-shadow: none;
+}
+
+.dish-button:hover{
     background-color: #809B98ff;
     color: #213035ff;
     text-shadow: none;
