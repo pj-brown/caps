@@ -41,7 +41,7 @@ var storedDishes = JSON.parse(localStorage.getItem("Dish")) || [];
 
 
 // on load, ask for user's location data
-window.addEventListener("load", getLocation)
+window.addEventListener("load", getLocation);
 
 // get user's location data
 function getLocation() {
@@ -63,8 +63,8 @@ function showPosition(position) {
     var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=1"
 
     $.ajax({
-        url: latlongUrl,
-        method: "GET",
+        "url": latlongUrl,
+        "method": "GET",
         "headers": {
             "x-rapidapi-host": "us-restaurant-menus.p.rapidapi.com",
             "x-rapidapi-key": "7e2b082138msh261301ec7c957a4p1da6fbjsn1aa9a17ef936"
@@ -76,7 +76,7 @@ function showPosition(position) {
         var restaurantListEl = $("<div>").addClass("container");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr({"value": restaurantId, "zomato": restaurantList[i].restaurant_name});
+            var restaurantButtons = $("<button>").text(restaurantList[i].restaurant_name).addClass("rest-button row").attr({ "value": restaurantId, "data-zomato": restaurantList[i].restaurant_name });
             $("body").append(restaurantListEl);
             restaurantListEl.append(restaurantButtons);
 
@@ -87,47 +87,44 @@ function showPosition(position) {
     });
 };
 
+// var qname = (whatever is passed in the function)
+function zomatoMenuUrl(qname) {
 
+    console.log("Q value: ", qname)
+    var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + qname;
+
+
+    $.ajax({
+        url: zomatoUrl,
+        method: "GET",
+        "headers": {
+            "user-key": "fd3179f7aa74b386fbac5aec3f13b934"
+        }
+
+    }).then(function (response) {
+        console.log(response);
+
+        console.log(response.restaurants[0].restaurant.menu_url);
+
+        // menu link div
+        var menuUrlDiv = $("<div>").addClass("container");
+        // link to zomato menu url
+        var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(qname + " " + "Menu");
+        // appending menu url div to body
+        $("body").append(menuUrlDiv);
+        // prepends link to top of dishes page
+        menuUrlDiv.append(menuUrlLink);
+    });
+};
 
 function showDishes() {
+    var q = $(this).attr("data-zomato");
 
-
-    var q = $(this).attr("zomato");
-
-    function zomatoMenuUrl() {
-
-        
-        console.log("Q value: ", q)
-        var zomatoUrl = "https://developers.zomato.com/api/v2.1/search?entity_id=826&entity_type=city&q=" + q;
-    
-    
-        $.ajax({
-            url: zomatoUrl,
-            method: "GET",
-            "headers": {
-                "user-key": "fd3179f7aa74b386fbac5aec3f13b934"
-            }
-            
-        }).then(function (response) {
-            console.log(response);
-    
-            console.log(response.restaurants[i].restaurant.menu_url);
-    
-            // menu link div
-            var menuUrlDiv = $("<div>").addClass("container");
-            // link to zomato menu url
-            var menuUrlLink = $("<a>").attr("href", response.restaurants[0].restaurant.menu_url).text(q + " " + "Menu");
-            // appending menu url div to body
-            $("body").append(menuUrlDiv);
-            // prepends link to top of dishes page
-            menuUrlDiv.append(menuUrlLink);
-        });
-    };
     var urlId = $(this).val();
     // console.log(urlId)
-    var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/"+urlId+"/menuitems?page=1"
+    var dishesUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurant/" + urlId + "/menuitems?page=1"
     // console.log(dishesUrl)
-    zomatoMenuUrl();
+    zomatoMenuUrl(q);
 
     $.ajax({
         url: dishesUrl,
@@ -146,28 +143,72 @@ function showDishes() {
 
         for (let i = 0; i < dishesList.length; i++) {
             var dishName = dishesList[i].menu_item_name;
-            var dishButtons = $("<button>").text(dishName).addClass("row dish-button").attr("value", dishName);
-            
+            var restName = dishesList[i].restaurant_name;
+            var dishButtons = $("<button>")
+                .text(dishName)
+                .addClass("row dish-button")
+                .attr({ "value": dishName, "data-name": restName })
+                .click(applyDishButtonEventLisetner);
+
             $("body").append(dishesListEl);
             dishesListEl.append(dishButtons);
         };
-        applyDishButtonEventLisetner()
+        // applyDishButtonEventLisetner()
     });
-    
-    
+
+
 };
+
+// function applyDishButtonEventLisetner() {
+
+//     $(".dish-button").on("click", function () {
+
+
+//         var dish = $(this).val();
+//         var rest = $(this).attr("rest-name");
+//         // var storedDishes = ("dishName", dish);
+//         var dishAndRest = [];
+//         dishAndRest.push()
+//         storedDishes.push(dish);
+//         console.log(storedDishes);
+
+//         localStorage.setItem("Dish", JSON.stringify(storedDishes));
+//     });
+// };
+
+// $(".dish-button").on("click", applyDishButtonEventLisetner);
 
 function applyDishButtonEventLisetner() {
 
-    $(".dish-button").on("click", function () {
-        
-        
-        var dish = $(this).val();
-        // var storedDishes = ("dishName", dish);
-        storedDishes.push(dish);
-        console.log(storedDishes);
+    var obj = {
+        dish: $(this).val(),
+        rest: $(this).attr("data-name")
+    }
 
-        localStorage.setItem("Dish", JSON.stringify(storedDishes));
-    });
+    // var dish = $(this).val();
+    // var rest = $(this).attr("rest-name");
+    // var storedDishes = ("dishName", dish);
+    // var dishAndRest = [];
+    // dishAndRest.push()
+    
+    console.log(storedDishes);
+    storedDishes.push(obj);
+    localStorage.setItem("Dish", JSON.stringify(storedDishes));
 };
 
+/*
+1. git add .
+2. git commit -m "some comments about the commit"
+3. git pull origin master
+4. IF merge conflicts
+    handle merge conflicts, repeat starting step 1.
+   ELSE
+    continue
+5. git pull origin "branch name"
+6. IF merge conflicts
+    handle merge conflicts, repeat starting step 1.
+   ELSE
+    continue
+7. git push origin "branch name"
+8. On github create pulll rquest from branch to master (should not have conflicts)
+*/
