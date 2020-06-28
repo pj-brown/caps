@@ -87,7 +87,6 @@ function showPosition(position) {
     });
 };
 
-// var qname = (whatever is passed in the function)
 function zomatoMenuUrl(qname) {
 
     console.log("Q value: ", qname)
@@ -153,62 +152,20 @@ function showDishes() {
             $("body").append(dishesListEl);
             dishesListEl.append(dishButtons);
         };
-        // applyDishButtonEventLisetner()
     });
 
 
 };
 
-// function applyDishButtonEventLisetner() {
-
-//     $(".dish-button").on("click", function () {
-
-
-//         var dish = $(this).val();
-//         var rest = $(this).attr("rest-name");
-//         // var storedDishes = ("dishName", dish);
-//         var dishAndRest = [];
-//         dishAndRest.push()
-//         storedDishes.push(dish);
-//         console.log(storedDishes);
-
-//         localStorage.setItem("Dish", JSON.stringify(storedDishes));
-//     });
-// };
-
-// $(".dish-button").on("click", applyDishButtonEventLisetner);
 
 function applyDishButtonEventLisetner() {
 
     var obj = {
         dish: $(this).val(),
         rest: $(this).attr("data-name")
-    }
-
-    // var dish = $(this).val();
-    // var rest = $(this).attr("rest-name");
-    // var storedDishes = ("dishName", dish);
-    // var dishAndRest = [];
-    // dishAndRest.push()
+    };
     
     console.log(storedDishes);
     storedDishes.push(obj);
     localStorage.setItem("Dish", JSON.stringify(storedDishes));
 };
-
-/*
-1. git add .
-2. git commit -m "some comments about the commit"
-3. git pull origin master
-4. IF merge conflicts
-    handle merge conflicts, repeat starting step 1.
-   ELSE
-    continue
-5. git pull origin "branch name"
-6. IF merge conflicts
-    handle merge conflicts, repeat starting step 1.
-   ELSE
-    continue
-7. git push origin "branch name"
-8. On github create pulll rquest from branch to master (should not have conflicts)
-*/
