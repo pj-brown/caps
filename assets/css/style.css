@@ -1,18 +1,37 @@
-/* change the color of the link */
-.btn:hover {
-    background-color: #e66815;
+/* collapse 1 */
+#headingOne{
+    background-color: #1E5926ff;
+    opacity: 1;
     color: white;
 }
-/* .nav-link{
-    color: antiquewhite;
-} */
-.image{
-    background-image: url("images.png");
-width: 100vw;
-height: 100vh; 
-background-size: 100% 100%;
-background-repeat: no-repeat;
-position: relative;
-/* image-rendering: -webkit-optimize-contrast; */
+/* collapse 2 */
+#headingTwo{
+    background-color:#D9CAAEff;
+
+    
+}
+/* change background when hover on link */
+.btn:hover {
+    
+    color: rgb(22, 21, 21);
+    
 
 }
+
+/* image of the background */
+body{
+    background-color: #213035ff;
+}
+/* change background color of navbar */
+
+.card-body{
+    background-color:  #B99861ff;
+    border: none;
+
+}
+.card{
+    border: none;
+}
+
+
+    
