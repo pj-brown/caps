@@ -76,7 +76,7 @@ function showPosition(position) {
         var restaurantListEl = $('<div>').addClass("container-fluid");
         for (let i = 0; i < restaurantList.length; i++) {
             var restaurantId = response.result.data[i].restaurant_id;
-            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "zomato": restaurantList[i].restaurant_name});
+            var restaurantButtons = $("<button type='button' data-toggle='modal'>").text(restaurantList[i].restaurant_name).addClass("rest-button btn col btn-primary").attr({"data-target": "#restaurantModal" + i,"value": restaurantId, "data-zomato": restaurantList[i].restaurant_name});
 
             // modal variables
             var restaurantAddress = response.result.data[i].address.formatted
