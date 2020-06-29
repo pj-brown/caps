@@ -1,22 +1,11 @@
 /* collapse 1 */
-#headingOne{
-    background-color: #B99861ff;
+#headingOne, #headingTwo, #headingThree {
+    /* background-color: #B99861ff; */
+    background-image: linear-gradient(to top left, rgb(153, 121, 67), rgb(194, 183, 163));
     opacity: 1;
     color: white;
-
 }
-/* collapse 2 */
-#headingTwo{
-    background-color:#B99861ff;
 
-    
-}
-/* collapse 3 */
-#headingThree{
-    background-color:#B99861ff;
-
-    
-}
 /* change background when hover on link */
 .btn:hover {
     color: rgb(22, 21, 21);
@@ -35,17 +24,19 @@ body {
     background: linear-gradient(rgb(196, 129, 85), rgb(74, 202, 91) );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    padding-right: 5px;
 }
 
 /* center brand text */
 .center-text {
     justify-content: center;
-    margin: 0;
+    margin: 0
 }
 /* change background color of navbar */
 
 .card-body{
-    background-color:  #D9CAAEff;
+    /* background-color:  #D9CAAEff; */
+    background-image: linear-gradient(to bottom right, rgb(153, 121, 67), rgb(233, 222, 201));
     border: none;
 
 }
@@ -64,15 +55,6 @@ body {
     font-size: 1.2em;
 }
 
-/* center rest and dish buttons */
-
-/* .rest-list-div {
-    text-align: center;
-    align-items: center;
-} */
-
-/* restaurant but
-tons */
 .rest-button, .dish-button {
     width: 100%;
     border: none;
@@ -89,29 +71,30 @@ tons */
     font-weight: bold;
 }
 
-/* Bounce In */
-.hvr-bounce-in {
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-  }
-  .hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
-    -webkit-transform: scale(1.2);
-    transform: scale(1.2);
-    -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
-    transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
-  }
 
-.rest-button:hover {
+.dish-button:hover, .rest-button:hover {
     background-color: #809B98ff;
     color: #213035ff;
     text-shadow: none;
 }
 
-.dish-button:hover{
+.btn:hover {
+    background-color: #809B98ff;
+    color: #213035ff;
+    text-shadow: none;
+    border-color: #1E5926ff;
+}
+
+a:hover {
+    color: #D9CAAEff;
+}
+
+.btn-primary:focus {
+    background-color: #809B98ff;
+    color: #213035ff;
+    text-shadow: none;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
     background-color: #809B98ff;
     color: #213035ff;
     text-shadow: none;
@@ -131,8 +114,49 @@ tons */
     border-radius: 5px;
     text-shadow: 0.6px 0.3px rgb(24, 46, 31);
 }
-.modal-footer{
+
+h4 {
+    font-size: 2.2em;
+}
+.modal-header {
+    font-family: 'Yellowtail', cursive;
+    background-color: #809B98ff;
+    height: auto;
+    text-shadow: 1px 1px rgb(235, 232, 232);
+
+}
+
+.modal-close {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #1E5926ff;
+}
+
+.modal-footer {
     position: relative;
+    background-color: #D9CAAEff;
+    border: none;
+    
+}
+
+.modal-body {
+    background-color:#D9CAAEff;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.4em;
+}
+
+
+.zomato-link {
+    background-color: #809B98ff;
+    font-style: italic;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #213035ff;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-shadow: 5px 5px #1E5926ff;
+
 }
 
 /*    
