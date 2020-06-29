@@ -102,7 +102,7 @@ function showPosition(position) {
 
             var modalCloseButton = $('<button class="modal-close btn btn-secondary" type="button" data-dismiss="modal" aria-label="Close">')
                 .add($('<span aria-hidden="true>'))
-                .text("Close")
+                .text("X")
             // modal body variablesco
             var modalBody = $('<div class="modal-body">')
             var modalRestaurantAddress = $('<p class="modal-restaurant-address">')
@@ -136,7 +136,7 @@ function showDishes() {
     // toggles Restaurant accordion to close and then Men accordion opens
     $("#collapseOne").toggle();
     $("#collapseThree").toggle();
-    var q = $(".menu-button").attr("data-zomato");
+    var q = $(this).attr("data-zomato");
 
     var urlId = $(this).val();
     console.log(urlId)
@@ -157,7 +157,7 @@ function showDishes() {
         var dishesList = response.result.data;
         // clears page to make way for menu items
         // $(".rest-button").remove();
-        var dishesListEl = $("<div>").addClass("container");
+        var dishesListEl = $("<div>").addClass("container menu-container");
 
         for (let i = 0; i < dishesList.length; i++) {
             var dishName = dishesList[i].menu_item_name;
@@ -196,15 +196,16 @@ function zomatoMenuUrl(qname) {
         console.log(response.restaurants[0].restaurant.menu_url);
 
         // menu link div
-        var menuUrlDiv = $("<div>").addClass("container");
+        // var menuUrlDiv = $("<div>").addClass("container");
         // link to zomato menu url
         var menuUrlLink = $("<a>")
+            .addClass("zomato-link row")
             .attr("href", response.restaurants[0].restaurant.menu_url)
-            .text(qname + " " + "Menu");
+            .text(qname + " " + "Menu via Zomato");
         // // appending menu url div to body
-        $("#menu-card-body").append(menuUrlDiv);
+        $(".menu-container").prepend(menuUrlLink);
         // prepends link to top of dishes page
-        menuUrlDiv.append(menuUrlLink);
+        // menuUrlDiv.append(menuUrlLink);
     });
 };
 
@@ -218,4 +219,16 @@ function applyDishButtonEventLisetner() {
     console.log(storedDishes);
     storedDishes.push(obj);
     localStorage.setItem("Dish", JSON.stringify(storedDishes));
+    renderLastDishListItem();
+};
+
+function renderLastDishListItem() {
+
+    var lastItem = storedDishes.slice(-1)[0]
+    console.log(lastItem)
+    var dishListItem = $("<li>")
+        .text(lastItem.rest + ": " + lastItem.dish)
+        .addClass("dish-style");
+
+        $("#dishlist").append(dishListItem);
 };
