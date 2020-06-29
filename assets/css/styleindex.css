@@ -1,0 +1,67 @@
+
+ body, html {
+    height: 100%;
+    width: 100%;
+    
+    background-color:#213035ff;
+  }
+  .bg {
+    /* The image used */
+    float:right; 
+    background-image: url("noodles.gif");
+    border-style: none;
+    
+    /* Half height */
+    height: 100%;
+    width: 100%;
+    
+    /* Center and scale the image nicely */ 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    align-items: center; 
+  }
+
+  h1 {
+  font-family: 'Yellowtail', cursive; 
+  font-weight: bold; 
+  text-align: center;
+  font-size: 100px;
+  padding-top: 20%;
+  color: #fff;
+  }
+  
+  
+ 
+
+  .button {
+      align-content: center;
+      margin-top:10%; 
+      margin-left: 27%;
+     
+  }
+
+    .btn {
+        font-family: 'Cutive Mono', monospace;
+        font-size: 23px;
+        font-weight: bolder;
+        background-color: transparent;
+        outline-style: outset;
+        border-radius: 1 em;
+        border-color: transparent; 
+        width: 70%;
+        padding: 5%;
+
+        
+    }
+
+    button:hover {
+        background-color: rgba(0,0,0..30);
+    }
+
+    a {
+      color: white 
+    }
+
+
+    
