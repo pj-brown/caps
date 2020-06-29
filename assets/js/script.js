@@ -60,7 +60,7 @@ function getLocation() {
 function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
-    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=1"
+    var latlongUrl = "https://us-restaurant-menus.p.rapidapi.com/restaurants/search/geo?page=1&lon=" + lon + "&lat=" + lat + "&distance=5"
 
     $.ajax({
         "url": latlongUrl,
